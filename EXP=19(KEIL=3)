@@ -1,0 +1,20 @@
+#include <reg51.h>    // Header file for 8051 microcontroller
+
+void main() {
+    unsigned int i;
+    unsigned char num = 12;     // Number to find factorial of
+    unsigned long factorial = 1; // Use 32-bit variable for large values
+
+    // Calculate factorial
+    for (i = 1; i <= num; i++) {
+        factorial = factorial * i;
+    }
+
+    // Output factorial across ports P0–P3
+    P0 = (unsigned char)(factorial & 0xFF);          // Lower 8 bits
+    P1 = (unsigned char)((factorial >> 8) & 0xFF);   // Next 8 bits
+    P2 = (unsigned char)((factorial >> 16) & 0xFF);  // Next 8 bits
+    P3 = (unsigned char)((factorial >> 24) & 0xFF);  // Upper 8 bits
+
+    while (1); // Infinite loop to hold the output on ports
+}
